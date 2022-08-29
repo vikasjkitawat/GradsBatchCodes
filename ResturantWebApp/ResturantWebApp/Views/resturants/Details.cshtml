@@ -1,0 +1,26 @@
+﻿@model ResturantWebApp.Models.resturant
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>resturant</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.resturantName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.resturantName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.resturantID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

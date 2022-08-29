@@ -1,0 +1,201 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="resturantDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="addresses">
+          <Key>
+            <PropertyRef Name="addressID" />
+          </Key>
+          <Property Name="addressID" Type="int" Nullable="false" />
+          <Property Name="street" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="city" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="states" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="resturantID" Type="int" />
+        </EntityType>
+        <EntityType Name="items">
+          <Key>
+            <PropertyRef Name="itemID" />
+          </Key>
+          <Property Name="itemID" Type="int" Nullable="false" />
+          <Property Name="itemName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="itemPrice" Type="int" Nullable="false" />
+          <Property Name="resturantID" Type="int" />
+        </EntityType>
+        <EntityType Name="resturant">
+          <Key>
+            <PropertyRef Name="resturantID" />
+          </Key>
+          <Property Name="resturantID" Type="int" Nullable="false" />
+          <Property Name="resturantName" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__addresses__restu__276EDEB3">
+          <End Role="resturant" Type="Self.resturant" Multiplicity="0..1" />
+          <End Role="addresses" Type="Self.addresses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="resturant">
+              <PropertyRef Name="resturantID" />
+            </Principal>
+            <Dependent Role="addresses">
+              <PropertyRef Name="resturantID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__items__resturant__2A4B4B5E">
+          <End Role="resturant" Type="Self.resturant" Multiplicity="0..1" />
+          <End Role="items" Type="Self.items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="resturant">
+              <PropertyRef Name="resturantID" />
+            </Principal>
+            <Dependent Role="items">
+              <PropertyRef Name="resturantID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="resturantDBModelStoreContainer">
+          <EntitySet Name="addresses" EntityType="Self.addresses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="items" EntityType="Self.items" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="resturant" EntityType="Self.resturant" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__addresses__restu__276EDEB3" Association="Self.FK__addresses__restu__276EDEB3">
+            <End Role="resturant" EntitySet="resturant" />
+            <End Role="addresses" EntitySet="addresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK__items__resturant__2A4B4B5E" Association="Self.FK__items__resturant__2A4B4B5E">
+            <End Role="resturant" EntitySet="resturant" />
+            <End Role="items" EntitySet="items" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="resturantDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="address">
+          <Key>
+            <PropertyRef Name="addressID" />
+          </Key>
+          <Property Name="addressID" Type="Int32" Nullable="false" />
+          <Property Name="street" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="city" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="states" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="resturantID" Type="Int32" />
+          <NavigationProperty Name="resturant" Relationship="Self.FK__addresses__restu__276EDEB3" FromRole="addresses" ToRole="resturant" />
+        </EntityType>
+        <EntityType Name="item">
+          <Key>
+            <PropertyRef Name="itemID" />
+          </Key>
+          <Property Name="itemID" Type="Int32" Nullable="false" />
+          <Property Name="itemName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="itemPrice" Type="Int32" Nullable="false" />
+          <Property Name="resturantID" Type="Int32" />
+          <NavigationProperty Name="resturant" Relationship="Self.FK__items__resturant__2A4B4B5E" FromRole="items" ToRole="resturant" />
+        </EntityType>
+        <EntityType Name="resturant">
+          <Key>
+            <PropertyRef Name="resturantID" />
+          </Key>
+          <Property Name="resturantID" Type="Int32" Nullable="false" />
+          <Property Name="resturantName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="addresses" Relationship="Self.FK__addresses__restu__276EDEB3" FromRole="resturant" ToRole="addresses" />
+          <NavigationProperty Name="items" Relationship="Self.FK__items__resturant__2A4B4B5E" FromRole="resturant" ToRole="items" />
+        </EntityType>
+        <Association Name="FK__addresses__restu__276EDEB3">
+          <End Role="resturant" Type="Self.resturant" Multiplicity="0..1" />
+          <End Role="addresses" Type="Self.address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="resturant">
+              <PropertyRef Name="resturantID" />
+            </Principal>
+            <Dependent Role="addresses">
+              <PropertyRef Name="resturantID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__items__resturant__2A4B4B5E">
+          <End Role="resturant" Type="Self.resturant" Multiplicity="0..1" />
+          <End Role="items" Type="Self.item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="resturant">
+              <PropertyRef Name="resturantID" />
+            </Principal>
+            <Dependent Role="items">
+              <PropertyRef Name="resturantID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="resturantDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="addresses" EntityType="Self.address" />
+          <EntitySet Name="items" EntityType="Self.item" />
+          <EntitySet Name="resturants" EntityType="Self.resturant" />
+          <AssociationSet Name="FK__addresses__restu__276EDEB3" Association="Self.FK__addresses__restu__276EDEB3">
+            <End Role="resturant" EntitySet="resturants" />
+            <End Role="addresses" EntitySet="addresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK__items__resturant__2A4B4B5E" Association="Self.FK__items__resturant__2A4B4B5E">
+            <End Role="resturant" EntitySet="resturants" />
+            <End Role="items" EntitySet="items" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="resturantDBModelStoreContainer" CdmEntityContainer="resturantDBEntities">
+          <EntitySetMapping Name="addresses">
+            <EntityTypeMapping TypeName="resturantDBModel.address">
+              <MappingFragment StoreEntitySet="addresses">
+                <ScalarProperty Name="addressID" ColumnName="addressID" />
+                <ScalarProperty Name="street" ColumnName="street" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="states" ColumnName="states" />
+                <ScalarProperty Name="resturantID" ColumnName="resturantID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="items">
+            <EntityTypeMapping TypeName="resturantDBModel.item">
+              <MappingFragment StoreEntitySet="items">
+                <ScalarProperty Name="itemID" ColumnName="itemID" />
+                <ScalarProperty Name="itemName" ColumnName="itemName" />
+                <ScalarProperty Name="itemPrice" ColumnName="itemPrice" />
+                <ScalarProperty Name="resturantID" ColumnName="resturantID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="resturants">
+            <EntityTypeMapping TypeName="resturantDBModel.resturant">
+              <MappingFragment StoreEntitySet="resturant">
+                <ScalarProperty Name="resturantID" ColumnName="resturantID" />
+                <ScalarProperty Name="resturantName" ColumnName="resturantName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
